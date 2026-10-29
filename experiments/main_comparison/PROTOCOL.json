@@ -1,0 +1,59 @@
+{
+  "dataset": "SIFT1M",
+  "training_queries": 1200,
+  "internal_training_holdout": 200,
+  "validation_queries": 1000,
+  "test_queries": 1000,
+  "L_training_and_learned_grid": [
+    15,
+    20,
+    30,
+    50,
+    75,
+    100,
+    160,
+    300
+  ],
+  "L_baseline_range": [
+    10,
+    300
+  ],
+  "beam": 4,
+  "K": 10,
+  "threads": 4,
+  "cache_nodes": 10000,
+  "seed": 20261030,
+  "training": "mixed-L baseline trajectories; same sampled cache-miss candidates for LR/XGB/stateMLP/qvMLP, no test or validation queries used for weight fitting/checkpoint selection",
+  "pruning_label": "retain iff admitted_neighbors>0 OR node in final baseline top10 for its L; conservative contribution proxy, not counterfactual risk",
+  "ET_label": "actual GT Recall@10 of current exact-scored prefix top10 at a beam boundary, supervised offline only; 17 live features at runtime",
+  "ET": "native DiskANN learned recall estimator; stop if prediction>=threshold, only after >=K exact candidates; related-strategy implementation, not a claimed faithful DARTH/LAET reproduction",
+  "tuning_budget_per_family": 64,
+  "baseline": "64 distinct L settings incl all learned L choices; stronger finely tuned baseline",
+  "learning_budget": "8 common L settings x8 threshold/preset settings per family; combined ET+pruning receives8 predeclared threshold pairs per L, not a larger Cartesian budget",
+  "gate_cache": "cache hits protected consistently across all pruning families; ET may stop whole search at beam boundary",
+  "training_and_timing": "isolated native library; no modification of original DiskANN source or previous models; all inference, feature assembly and q-v memory access timed; model/index load excluded",
+  "qv_extra_memory_bytes": 512000000,
+  "IO": "submitted SSD requests; Linux reader O_DIRECT, OS page cache bypassed; static BFS cache and per-config query warmup",
+  "plots": "empirical per-metric nondominated frontiers at ACTUAL measured Recall; marker=real configuration, lines guide the eye; standard-target linear frontier interpolation recorded only as descriptive estimates, never called single-config measurements; P95/QPS not linearly interpolated for deployable claims",
+  "validation_selection": "for each Recall target and objective choose minimal validation cost/maxQPS under empirical validation Recall constraint; lock before test; report actual test Recall and feasibility separately",
+  "test_curve": "fixed validation-independent grid also fully evaluated on held-out queries for descriptive achievable frontiers; not used to retrain, enlarge a method budget, or claim unbiased deployment parameter selection",
+  "recall_targets_pct": [
+    90,
+    95,
+    98,
+    99,
+    99.5,
+    99.7
+  ],
+  "repeats": "validation all grid once; test all grid once; objective-frontier/validation-selected configs two additional repeats; final frontiers use3-repeat medians wherever selected",
+  "related_work": {
+    "DARTH": "https://github.com/MChatzakis/DARTH",
+    "LAET": "https://github.com/efficient/faiss-learned-termination"
+  },
+  "limits": [
+    "previously observed original test queries; exploratory benchmark, not new confirmatory set",
+    "same finite configuration count does not guarantee global optimality",
+    "ET trained on unpruned prefixes; ET+pruning faces trajectory shift, evaluated live",
+    "q-v input uses full base vectors in DRAM; extra memory explicitly reported"
+  ]
+}

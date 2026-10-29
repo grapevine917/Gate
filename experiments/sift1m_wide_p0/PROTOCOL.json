@@ -1,0 +1,114 @@
+{
+  "dataset": "SIFT1M",
+  "base_vectors": 1000000,
+  "dimensions": 128,
+  "index": "/home/lxyue/projects/learned-gate/experiments/sift1m/index",
+  "L_training_and_learned_grid": [
+    30,
+    50,
+    75,
+    100,
+    160,
+    300,
+    500,
+    1000
+  ],
+  "P0_A_L": 300,
+  "old_P0_A_L": 100,
+  "old_P0_B_max_L": 300,
+  "beam": 4,
+  "K": 10,
+  "threads": 4,
+  "MKL_threads": 1,
+  "cache_nodes": 10000,
+  "training_queries": 1200,
+  "internal_holdout_queries": 200,
+  "validation_queries": 1000,
+  "test_queries": 1000,
+  "seed": 20261024,
+  "train_candidates_per_query_per_L": 64,
+  "models": "Fresh 17D MLP and LR trained on identical mixed-wide-L rows; fresh ET on the corresponding prefix rows; no prior model weights reused",
+  "MLP": "17-128-64-1; internal query holdout checkpoint selection, maximum80epochs; refit all1200 queries with selected epoch count",
+  "label": "retain iff admitted_neighbors>0 OR final baseline Top10; same conservative contribution proxy as original P0",
+  "P0_A": "L300; shared Vanilla/Heuristic, Static MLP, Static LR, Dynamic MLP, Dynamic LR. Static threshold calibrated retain-FNR1% on validation L300. Dynamic chosen on validation L300 under Recall>=corresponding static default. Twelve balanced six-method cyclic timing repeats; shared run pool also used by P0-B.",
+  "P0_B": "Nine families: DiskANN, Heuristic, MLP, LR, DynamicMLP, DynamicLR, ET, ET_MLP, ET_LR. One shared control pool;64 configs/family, 8Lx8presets except baseline64distinctL.",
+  "targets": [
+    90,
+    95,
+    98,
+    99,
+    99.5,
+    99.7,
+    99.9
+  ],
+  "risks": [
+    0,
+    0.001,
+    0.0025,
+    0.005,
+    0.01,
+    0.02,
+    0.05,
+    0.1
+  ],
+  "dynamic_presets": [
+    [
+      0,
+      0,
+      1,
+      -1
+    ],
+    [
+      0,
+      3,
+      0.72,
+      1
+    ],
+    [
+      0,
+      5,
+      0.5,
+      0.9
+    ],
+    [
+      0,
+      6,
+      0.25,
+      0.75
+    ],
+    [
+      2,
+      5,
+      0.5,
+      0.9
+    ],
+    [
+      3,
+      6,
+      0.25,
+      0.75
+    ],
+    [
+      4,
+      7,
+      0.25,
+      0.75
+    ],
+    [
+      1,
+      7,
+      0.64,
+      0.92
+    ]
+  ],
+  "dynamic_rule": "score < base_tau; when zero-based rank > r AND completed_expansions > e use max(base_tau, late_tau); cache hits protected",
+  "validation": "Calibrate gate thresholds on full validation L300 baseline cache-miss states; freeze64/config grids; lock per-target per-objective choices before test",
+  "test": "Full frozen grid descriptive frontiers; repeat validation-selected policies and all final objective frontiers to3 repeats until stable. No test-guided grid extension.",
+  "limits": [
+    "Previously inspected query split; exploratory follow-up, not an independent blind benchmark",
+    "P0-A L300 and wider mixed-L training both differ from original L100 study; not a pure queue-width causal ablation",
+    "Finite dynamic presets, not globally optimal",
+    "Candidate proxy FNR is not final Recall loss",
+    "ET trained on unpruned trajectories; joint groups may have trajectory shift"
+  ]
+}

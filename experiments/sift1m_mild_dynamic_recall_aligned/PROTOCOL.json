@@ -1,0 +1,100 @@
+{
+  "dataset": "SIFT1M",
+  "base_vectors": 1000000,
+  "dimensions": 128,
+  "training_L": 100,
+  "model_dir": "/home/lxyue/projects/learned-gate/experiments/sift1m_p0a_L100_train_compare/models_train100",
+  "retrained": false,
+  "beam": 4,
+  "K": 10,
+  "threads": 4,
+  "MKL_threads": 1,
+  "cache_nodes": 10000,
+  "seed": 20261024,
+  "validation_queries": 1000,
+  "test_queries": 1000,
+  "static_tau": {
+    "state": 0.04251997172832489,
+    "lr": 0.024956785142421722
+  },
+  "main": "InferenceL100, base tau identical to corresponding static1%FNR threshold; choose active mild policy with validation Recall>=static default, lowest validationP95; lock before test;6methods12balancedcyclicrepeats",
+  "multipliers": [
+    1.1,
+    1.25,
+    1.5,
+    2.0
+  ],
+  "main_progress": [
+    [
+      72,
+      100
+    ],
+    [
+      72,
+      105
+    ],
+    [
+      72,
+      110
+    ],
+    [
+      85,
+      100
+    ],
+    [
+      85,
+      105
+    ],
+    [
+      85,
+      110
+    ]
+  ],
+  "base_scales": [
+    0.5,
+    0.75,
+    1.0,
+    1.1,
+    1.25,
+    1.5,
+    2.0
+  ],
+  "alignment": "Same6families. Only DiskANN L may vary85..110; all learned/heuristic inferenceL100. Static threshold and dynamic base may be calibrated, but each static/dynamic pair MUST have identical base_tau. Match integer total_hits, never interpolate.",
+  "alignment_validation": "Find exact common validation hit count nearest99.60%, lock configs before test; report actual test residual separately",
+  "alignment_descriptive_test": "Evaluate frozen grid once; match actual test integer total_hits nearest99.60% with same-base static/dynamic pairs and active extra skips. Choose among matching configs using VALIDATION P95 ranking, not test timing. Fresh6timingrepeats12..17. This is descriptive quality matching, not an unbiased deployment result. If exact match unavailable, explicitly label minimal spread approximate.",
+  "controls": "Fresh contemporaneous shared control pool; identical config/repeat measured once across both studies",
+  "metrics": [
+    "Recall@10",
+    "P50",
+    "P95",
+    "P99",
+    "mean latency",
+    "QPS",
+    "physical bytes",
+    "read requests",
+    "expansions",
+    "skips",
+    "model calls",
+    "IO time",
+    "IO rounds",
+    "dynamic eligible",
+    "dynamic extra skips"
+  ],
+  "IO": "Strict reader bytes ==Linux read_bytes; reject/archive and retry mismatch, no tolerance relaxation",
+  "limits": [
+    "Already inspected query split, exploratory",
+    "Finite grid and one saved training seed",
+    "Same recall does not imply same successful queries",
+    "Final timing repeats do not include training variability"
+  ],
+  "source_hashes": {
+    "/home/lxyue/projects/learned-gate/experiments/sift1m_p0a_L100_train_compare/models_train100/state.bin": "d9defcd6020234a164d68e0bf3f2717abfc77cfc2b44628516df0398e7437f65",
+    "/home/lxyue/projects/learned-gate/experiments/sift1m_p0a_L100_train_compare/models_train100/lr.bin": "bf8575a8a9fe725a0d673541d3206460e2267c778f9a52e57873e53de041822c",
+    "/home/lxyue/projects/learned-gate/experiments/sift1m_p0a_L100_train_compare/native/search": "adaae8d6fad1e5f1f3d148119f9e1d540ac3e06774d9b28849dabfac4fe4d002",
+    "/home/lxyue/projects/learned-gate/experiments/sift1m_p0a_L100_train_compare/thresholds_L100.json": "46e724049cc38a9c4ea4b25737e3895562195b96aa51b2b6a0061a10fbae3077",
+    "/home/lxyue/projects/learned-gate/experiments/sift1m_wide_p0/data/validation.fbin": "e27c52615821ab26643065c402a2ae0372a1b599c07510077d0e21c18a01a757",
+    "/home/lxyue/projects/learned-gate/experiments/sift1m_wide_p0/data/validation.gt": "a5c7b0dbebcd0621219976eddd81ef4860dfa125a16114a40ce9afd7c520adec",
+    "/home/lxyue/projects/learned-gate/experiments/sift1m_wide_p0/data/test.fbin": "2462b7825563680abd67541a0f7a0a634e0bf10154e2d81845010027e3c5059b",
+    "/home/lxyue/projects/learned-gate/experiments/sift1m_wide_p0/data/test.gt": "398def1ce3388d120cb590f2b85d7362e088dcd97cb751318ddcfd941c604481"
+  }
+}

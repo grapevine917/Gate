@@ -1,0 +1,34 @@
+{
+  "base": "P0-A",
+  "model": "/home/lxyue/projects/learned-gate/experiments/sift1m/online_state_mlp/model.bin",
+  "tau": 0.055717818439006805,
+  "L": 100,
+  "K": 10,
+  "beam": 4,
+  "threads": 4,
+  "cache_nodes": 10000,
+  "history_queries": 1000,
+  "history_source": "first 1000 disjoint training queries, real MLP skip only; frozen",
+  "rho_definition": "squared L2(query,nearest historical query) / max(query squared norm, donor squared norm, 1e-12)",
+  "guard": "same candidate rank and completed expansion difference <=4",
+  "rho_grid": [
+    0,
+    0.01,
+    0.05,
+    0.1,
+    0.25,
+    0.5,
+    1.0
+  ],
+  "validation_repeats": 3,
+  "test_repeats": 9,
+  "selection": "separate max QPS / min P95 among reuse candidates with validation Recall >= heuristic and >= fresh MLP -0.05pp; fresh fallback; test never selects",
+  "timing": "includes exact 1000-query NN lookup, allocation, membership/guard, inference, real O_DIRECT IO; excludes loading/history construction, 128-query warmup per config, GT/output",
+  "order": "validation seeded random each round; test cyclic balanced order, nine repeats",
+  "limits": [
+    "previously observed test set; exploratory",
+    "no guarantee of improvement",
+    "reader direct requests measured; /proc/self/io unavailable in current environment; no block-layer/NAND measurement claim",
+    "finite validation selection and host timing noise"
+  ]
+}

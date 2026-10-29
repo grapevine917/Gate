@@ -1,0 +1,63 @@
+{
+  "experiment": "P0-C gate implementation ablation, separate from P0-A/B",
+  "families": [
+    "DiskANN",
+    "LR_Gate",
+    "XGBoost_Gate",
+    "State_MLP",
+    "QV_MLP"
+  ],
+  "dataset": "SIFT1M",
+  "index": "/home/lxyue/projects/learned-gate/experiments/sift1m/index",
+  "K": 10,
+  "beam": 4,
+  "threads": 4,
+  "cache_nodes": 10000,
+  "MKL_threads": 1,
+  "query_counts": {
+    "validation": 1000,
+    "test": 1000
+  },
+  "query_dir": "/home/lxyue/projects/learned-gate/experiments/main_comparison/data",
+  "model_dir": "/home/lxyue/projects/learned-gate/experiments/main_comparison/models",
+  "base_vectors": "/home/lxyue/projects/learned-gate/data/sift/sift_base.fbin",
+  "L_grid": [
+    15,
+    20,
+    30,
+    50,
+    75,
+    100,
+    160,
+    300
+  ],
+  "configs_per_family": 64,
+  "targets": [
+    90,
+    95,
+    98,
+    99,
+    99.5,
+    99.7
+  ],
+  "seed": 20261102,
+  "models": "Existing matched mixed-L frozen LR / 278-tree depth5 XGB /17-128-64-1 MLP /529-128-64-1 q-v MLP. No changes to P0-A/B original model.",
+  "training": "Same285754 cache-miss candidate samples and proxy retain labels from1200 training queries; inner1000/200 query split for checkpoint, then refit1200. qv additionally uses q,v,abs(q-v),q*v.",
+  "label": "retain iff admitted_neighbors>0 OR in final baseline Top10, NOT counterfactual risk label",
+  "validation": "Reuse existing main_comparison validation Recall/IO results for identical frozen model/grid/library; baseline/tau0 and all test IDs/counts must match existing runs. DO NOT reuse previous latency for selection; new test timing is descriptive empirical frontier only.",
+  "selection": "No new deployment parameter selection. Previously frozen equal64 grid evaluated fully on test; each metric frontier descriptive, actual Recall exposed; no interpolation or claims of unbiased deployment evaluation.",
+  "system": "Fresh timings; one model family per native process, baseline loads no model and no base-vector table. Interleave family batches and randomize configurations before each repeat. Final per-objective frontiers and exact common Recall winners3 trials; iterate if new frontier emerges.",
+  "primary": "Recall@10-P95 Latency Pareto frontier; secondary QPS/physical bytes. Curves separately optimized. Markers actual measured configurations; lines visual guides.",
+  "prediction": "Held-out original validation/test L100 baseline candidate states, cache misses only, identical labels and rows across4; native scores. L100 classification is diagnostic, online mixed-L trajectory results determine choice.",
+  "inference": "Native single-candidate scoring, random held-out cache-miss states,5 sweeps after warmup; measure mean ns/candidate and amortized17D state assembly separate, not batched BLAS. Shared 4-thread live search timings include full feature generation and inference.",
+  "physical_io": "Reader actual request lengths AND /proc/self/io read_bytes search-window delta; O_DIRECT. WSL2 guest block traffic, not NAND telemetry.",
+  "qv_extra_vector_bytes": 512000000,
+  "limits": [
+    "Previously observed queries; exploratory",
+    "Shared finite64 grid not global optimum",
+    "MLP here matched mixed-L weights, not original P0-A/B weights",
+    "q-v adds candidate vector information and query interactions together; this ablation alone cannot attribute gains to query information exclusively",
+    "Classification uses baseline L100 states, not interventions or final Recall harm",
+    "Timing frontier selection finite-sample noise; 3 repeated medians not formal significance proof"
+  ]
+}

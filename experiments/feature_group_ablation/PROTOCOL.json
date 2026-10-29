@@ -1,0 +1,162 @@
+{
+  "experiment": "Global / Candidate / Full17 pruning-MLP ablation",
+  "groups": {
+    "Global": {
+      "indices": [
+        1,
+        2,
+        4,
+        5,
+        6,
+        7,
+        8,
+        11,
+        12,
+        15,
+        16
+      ],
+      "n_features": 11,
+      "names": [
+        "best_pq_distance",
+        "worst_pq_distance",
+        "queue_size",
+        "unexpanded_count",
+        "visited_count",
+        "completed_expansions",
+        "beam_step",
+        "best_exact_before_beam",
+        "has_best_exact",
+        "search_L",
+        "beam_width"
+      ]
+    },
+    "Candidate": {
+      "indices": [
+        0,
+        3,
+        9,
+        10,
+        13,
+        14
+      ],
+      "n_features": 6,
+      "names": [
+        "candidate_pq_distance",
+        "candidate_queue_rank",
+        "beam_position",
+        "cached_node",
+        "candidate_pq_over_best",
+        "candidate_pq_over_worst"
+      ]
+    },
+    "Full17": {
+      "indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16
+      ],
+      "n_features": 17,
+      "names": [
+        "candidate_pq_distance",
+        "best_pq_distance",
+        "worst_pq_distance",
+        "candidate_queue_rank",
+        "queue_size",
+        "unexpanded_count",
+        "visited_count",
+        "completed_expansions",
+        "beam_step",
+        "beam_position",
+        "cached_node",
+        "best_exact_before_beam",
+        "has_best_exact",
+        "candidate_pq_over_best",
+        "candidate_pq_over_worst",
+        "search_L",
+        "beam_width"
+      ]
+    }
+  },
+  "global_candidate_disjoint": true,
+  "seed_list": [
+    42,
+    20261022,
+    20261023
+  ],
+  "train_queries": 8000,
+  "validation_queries": 1000,
+  "test_queries": 1000,
+  "train_samples": 894077,
+  "training_label": "y=0 iff baseline expansion admitted zero new candidates AND current node is not in baseline final top10; exact full-skip oracle mask verified identical results for all queries. y=1 means conservatively retain, not proof of necessity.",
+  "architecture": "d-128-64-1, ReLU/ReLU/sigmoid, BCE Adam; first-layer parameter count varies with d",
+  "training": {
+    "batch_size": 2048,
+    "lr": 0.001,
+    "alpha": 0.0001,
+    "max_epochs": 60,
+    "patience": 8,
+    "min_delta": 0.0001,
+    "selection": "validation logloss only",
+    "normalization": "training only"
+  },
+  "L": 100,
+  "K": 10,
+  "beam": 4,
+  "threads": 4,
+  "cache_nodes": 10000,
+  "cache_policy": "same protected static BFS cache; classify miss candidates only",
+  "history_and_secondary_risk": "disabled for all three groups",
+  "native": "existing E1 independently instrumented graph library; mapped ABGATE01 models",
+  "state_construction": "same live 17D reconstruction for every group then gather selected inputs; this ablates model inputs, not separately optimized feature-construction code",
+  "primary_R_min_pct": 99.44,
+  "R_min_sensitivity_pct": [
+    99.6,
+    99.44,
+    99.2,
+    99.0
+  ],
+  "curve_threshold_source": "validation conservative-retain FNR quantiles plus zero; then true validation graph Recall constraint",
+  "FNR_grid": [
+    0.0,
+    0.0001,
+    0.0005,
+    0.001,
+    0.0025,
+    0.005,
+    0.01,
+    0.02,
+    0.05,
+    0.1,
+    0.2
+  ],
+  "per_group_selection": "per seed and R_min: minimum validation SSD requests subject to absolute Recall floor; ties smaller tau; no test threshold selection",
+  "primary_comparison": "compare real I/O and inference-inclusive latency at the primary-R_min validation-selected I/O-optimal working point for each group/seed; if I/O winner and latency winner differ, report both; do not force a unique overall winner",
+  "curve_repeats": 1,
+  "primary_timing_repeats": 5,
+  "timing_order_seed": 20261024,
+  "timing": "all model training/audit/profile/curve runs finish before randomized serial timing; each native process warms all queries; 4 fixed distinct physical cores where available; inference, normalization and state feature construction included",
+  "CPU_affinity": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "confidence": "paired query bootstrap nested within matched training seeds and timing rounds; host noise and previously observed test set limit inference",
+  "existing_test_previously_observed": true,
+  "sklearn": "1.9.1",
+  "python": "3.11.16 (main, Aug 13 2026, 09:46:36) [GCC 15.2.0]"
+}

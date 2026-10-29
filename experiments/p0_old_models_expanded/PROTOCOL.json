@@ -1,0 +1,69 @@
+{
+  "version": 1,
+  "datasets": [
+    "sift1m",
+    "deep1m",
+    "sift100m"
+  ],
+  "families": [
+    "DiskANN",
+    "Heuristic",
+    "Ours_lr",
+    "Ours_xgb",
+    "Ours_state",
+    "ET",
+    "Joint_lr",
+    "Joint_xgb",
+    "Joint_state"
+  ],
+  "models": "old matched mixed-L proxy LR/XGB/State and ET; no retraining or dynamic thresholds",
+  "controls": "unchanged graph, queries, weights, K10, beam4, threads4, cache10000, warm128; inherited Reader/Linux IO equality and no swap",
+  "primary": {
+    "budget_per_family": "64 original configurations +96 new coarse +32 new validation-local =192 unique configs; same count for every family",
+    "L_range_1m": [
+      10,
+      1600
+    ],
+    "L_range_100m": [
+      10,
+      4000
+    ],
+    "gate_tau": [
+      0.0,
+      1.0
+    ],
+    "ET_tau": [
+      0.8,
+      1.0
+    ],
+    "heuristic": "rank [0,L], completed-expansions [0,2L]",
+    "joint": "L, gate tau and ET tau all varied",
+    "local": "32 perturbations around validation winners of 6 targets x3 independent objectives",
+    "selection": "validation only; freeze all objective/target selections before new test grid; previously observed benchmark test queries, not a fresh unseen dataset",
+    "targets": [
+      95.0,
+      98.0,
+      99.0,
+      99.5,
+      99.8,
+      99.9
+    ]
+  },
+  "strict": {
+    "label": "descriptive test-quality calibration; NOT held-out selection",
+    "nominal_targets": [
+      98.0,
+      99.5,
+      99.8
+    ],
+    "target_choice": "native actual hit count nearest nominal target from primary grid; each within0.15pp or reported unavailable; reference need not L100",
+    "budget": "up to72 additional probes per non-native family per target: six branches x(2 endpoints+10 bisection steps), no stop at first exact hit; integer duplicate heuristic probes reused",
+    "branches": "six L factors 1.0,1.2,1.5,2,3,4; heuristic six completed-expansion settings; joint three gate-threshold sweeps at different ET and three ET sweeps at different gate thresholds",
+    "exact": "equal integer GT total_hits out of10000; no interpolation, no query-dependent policy mixtures, no result truncation",
+    "active": "Gate/Heuristic skips>0; ET stopped_fraction>0; Joint BOTH; inactive exacts counted separately",
+    "objective": "select P95/QPS/bytes independently among exact active candidates; no exact =>explicit unmatched nearest record",
+    "repeats": 9
+  },
+  "frontiers": "three independent empirical measured frontiers; every final displayed point at least3 repeats; validation-selected and exact-objective winners9 repeats",
+  "timing": "datasets serial; configs randomized in blocks16; repetitions cyclic ordered; all results from one true config, with full metrics"
+}

@@ -1,0 +1,102 @@
+{
+  "experiment": "Within-State Candidate Discrimination",
+  "dataset": "SIFT1M",
+  "queries": 1000,
+  "L": 100,
+  "K": 10,
+  "beam": 4,
+  "cache_nodes": 10000,
+  "frozen_model_source": "/home/lxyue/projects/learned-gate/experiments/feature_group_ablation/models",
+  "groups": {
+    "Global": [
+      1,
+      2,
+      4,
+      5,
+      6,
+      7,
+      8,
+      11,
+      12,
+      15,
+      16
+    ],
+    "Candidate": [
+      0,
+      3,
+      9,
+      10,
+      13,
+      14
+    ],
+    "Full17": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16
+    ]
+  },
+  "seeds": [
+    42,
+    20261022,
+    20261023
+  ],
+  "no_training_or_threshold_selection": true,
+  "common_trajectory": "all candidates retained / no pruning; existing actual native tau0 traces from all 9 frozen models, joined one-to-one with validated baseline expansion records",
+  "population": "primary: cache-miss candidates actually scored by all models; cache-hit candidates recorded but protected and excluded from ranking/intervention primary sample",
+  "pairing": "all unordered pairs of noncached candidates within same (query_id, beam_step); never cross-query pairs; no outcome-based pair selection",
+  "natural_exact": "all 11 Global columns bit-identical; if empty report no support / NA rather than invent exact-state pairs",
+  "natural_near": "same real beam; require all Global dimensions except unexpanded_count bit-identical; normalized Global L2 <= locked maximum of 3 / training std(unexpanded_count) + tolerance",
+  "global_normalization_source": "/home/lxyue/projects/learned-gate/experiments/sift1m/training_data_l100/pre_io_state_train_normalization.npz",
+  "global_distance_limit": 0.10191034035078296,
+  "canonical_control": "use observed state from beam selection position0 as common Global vector; retain each candidate six original Candidate features; rescore frozen models only; not an actually deployed search or new training; slight canonical-input distribution shift disclosed",
+  "phase_cuts_train_only": [
+    29.0,
+    49.0,
+    69.0,
+    89.0
+  ],
+  "contribution_targets": {
+    "admitted_neighbors": "number of actually admitted neighbors during original expansion, observed direct marginal contribution in original processing order; not causal necessity",
+    "fresh_neighbors": "number of first-visited neighbors",
+    "conservative_retain": "admitted>0 or node in baseline final Top10; not proof of necessity",
+    "lost_hits": "baseline Top10 GT hits minus hits after exactly one forced Skip at this candidate; subsequent graph search completes normally",
+    "harmful_skip": "lost_hits>0",
+    "safe_positive_IO": "lost_hits<=0 and baseline_reads>after_reads"
+  },
+  "counterfactual": "exhaustive single-node intervention for every cache-miss baseline candidate; baseline model tau=0 (all retained), force score=-1 exactly once before decision; byte-identical original node, 17D pre-I/O state and native passive score checked; no reuse of E4-1 labels from a different pruned trajectory",
+  "intervention_model": "Full17 seed42 used only as passive tau0 score carrier; thresholds disabled, so all three groups share identical original search path",
+  "sham": "1000 fixed random cache-miss Keep->Keep interventions; same final IDs, distances, reads, expansions, neighbor comparisons required",
+  "metrics": "graded Pairwise Accuracy on unequal contribution counts; within-beam binary conditional AUC on positive/negative pairs (equal to tie-adjusted pairwise accuracy on those pairs); score ties count 0.5, target ties excluded with support reported; query/beam macro metrics additionally saved",
+  "heuristic_controls": [
+    "negative candidate PQ distance",
+    "negative candidate queue rank"
+  ],
+  "confidence": "1000 target-query cluster bootstrap draws, jointly resampling the three matched training seeds for group summaries and differences; individual pairs not treated independent",
+  "limitations": [
+    "Previously observed test set; exploratory diagnostic",
+    "Same-beam direct admission contributions depend on original processing order and overlapping neighborhoods",
+    "Single-node causal marginal labels cannot be summed as joint pruning effects",
+    "Canonical Global-only ties are a construction sanity check, not independent evidence against Global-only",
+    "Pairwise Accuracy / conditional AUC do not establish end-to-end Recall/latency gains"
+  ],
+  "CPU_affinity": [
+    0,
+    2,
+    4,
+    6
+  ]
+}

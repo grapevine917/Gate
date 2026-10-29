@@ -1,0 +1,49 @@
+{
+  "dataset": "SIFT1M",
+  "queries_per_split": 300,
+  "L": 100,
+  "K": 10,
+  "beam": 4,
+  "threads": 4,
+  "cache_nodes": 10000,
+  "taus": [
+    0,
+    0.016,
+    0.024,
+    0.037,
+    0.056,
+    0.082,
+    0.12,
+    0.18,
+    0.27,
+    0.4,
+    0.6,
+    0.85,
+    1.01
+  ],
+  "policies": [
+    "MLP",
+    "max_skip_1",
+    "max_skip_2",
+    "keep_best_1"
+  ],
+  "selection": "validation min reads under absolute Recall targets; test frozen thresholds; same-recall curves are interpolation estimates only",
+  "targets": [
+    99.0,
+    99.3,
+    99.5,
+    99.6
+  ],
+  "timing": "warmup per run; randomized serial runs; selected test configs 3 repeats; model loading excluded; beam preview copy overhead included",
+  "keep_best": "highest retain score among original next <=4 candidates; cached candidates protected and count toward minimum Keep; no extra model calls",
+  "original_hashes": {
+    "/home/lxyue/projects/learned-gate/DiskANN/src/pq_flash_index.cpp": "e5a536d2574d73b0fcd7352aeb749eb3a06ff8fe617a0ae1745fc8595fe3271d",
+    "/home/lxyue/projects/learned-gate/DiskANN/include/online_gate.h": "8dba549f89c4b8156f371dc119dc9b599a143bb59f96da5718ffc9b437c9dd1c",
+    "/home/lxyue/projects/learned-gate/experiments/sift1m/online_state_mlp/model.bin": "a24838e7ab23db44ab0101777689ee5a399401f4f3796ea170cbc11e6e6c792f"
+  },
+  "limitations": [
+    "previously observed test set; exploratory",
+    "300 queries; finite recall resolution",
+    "warm OS cache; submitted SSD requests, not physical device reads"
+  ]
+}

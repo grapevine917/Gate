@@ -1,0 +1,108 @@
+{
+  "dataset": "SIFT1M",
+  "base_vectors": 1000000,
+  "dimensions": 128,
+  "inference_L": 100,
+  "training_L": [
+    100,
+    300
+  ],
+  "beam": 4,
+  "K": 10,
+  "threads": 4,
+  "MKL_threads": 1,
+  "cache_nodes": 10000,
+  "training_queries": 1200,
+  "internal_holdout_queries": 200,
+  "validation_queries": 1000,
+  "test_queries": 1000,
+  "seed": 20261024,
+  "training": "Train separate fresh LR and17-128-64-1 MLP for single-L100 and single-L300; same query IDs and same sampled candidate count per query for both L values; same labels and rows within each MLP/LR pair",
+  "constant_features": "Zero first-layer/linear weights for columns constant in training. A single-L model cannot learn L dependence; this prevents arbitrary extrapolation of a constant L column when L300 is evaluated at L100. Applied identically to both training groups.",
+  "label": "retain iff admitted_neighbors>0 OR in final baseline Top10 at its training L; same contribution proxy",
+  "epochs": "max80, inner1000/200-query epoch selection then full1200-query refit; same initialization seed and architecture across L",
+  "static_threshold": "Native scores on full validation baseline L100 cache-miss candidates, retain-FNR1% for each model",
+  "dynamic": "Only trainL300 MLP/LR;8 presets from wide experiment, recalibrated at inferenceL100; select validation minimumP95 subject to Recall>=matching static trainL300 default; no retraining for dynamic policy",
+  "test": "8 groups,16 balanced cyclic repeats (8 positions x2); one shared DiskANN and one shared Heuristic pool; no historical timing reuse",
+  "families": [
+    "DiskANN",
+    "Heuristic",
+    "MLP_train100",
+    "LR_train100",
+    "MLP_train300",
+    "LR_train300",
+    "DynamicMLP_train300",
+    "DynamicLR_train300"
+  ],
+  "heuristic": {
+    "rank": 72,
+    "expansions": 100
+  },
+  "risks": [
+    0,
+    0.001,
+    0.0025,
+    0.005,
+    0.01,
+    0.02,
+    0.05,
+    0.1
+  ],
+  "dynamic_presets": [
+    [
+      0,
+      0,
+      1,
+      -1
+    ],
+    [
+      0,
+      3,
+      0.72,
+      1
+    ],
+    [
+      0,
+      5,
+      0.5,
+      0.9
+    ],
+    [
+      0,
+      6,
+      0.25,
+      0.75
+    ],
+    [
+      2,
+      5,
+      0.5,
+      0.9
+    ],
+    [
+      3,
+      6,
+      0.25,
+      0.75
+    ],
+    [
+      4,
+      7,
+      0.25,
+      0.75
+    ],
+    [
+      1,
+      7,
+      0.64,
+      0.92
+    ]
+  ],
+  "limits": [
+    "Previously inspected query split; exploratory",
+    "Both single-L model groups are freshly matched retrainings, not the historical L100 model weights",
+    "Previous wide model was mixed L30..1000, not pureL300; do not relabel it",
+    "Proxy FNR is not final Recall loss",
+    "Single training seed"
+  ]
+}

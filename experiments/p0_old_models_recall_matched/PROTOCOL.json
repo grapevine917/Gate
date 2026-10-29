@@ -1,0 +1,30 @@
+{
+  "version": 1,
+  "datasets": [
+    "sift1m",
+    "deep1m",
+    "sift100m"
+  ],
+  "families": [
+    "DiskANN",
+    "Heuristic",
+    "Ours_lr",
+    "Ours_xgb",
+    "Ours_state",
+    "ET",
+    "Joint_lr",
+    "Joint_xgb",
+    "Joint_state"
+  ],
+  "weights": "unchanged old matched mixed-L proxy models",
+  "selection": "Descriptive: tune on already-observed test-query Recall, freeze, independently retime SAME queries. NOT held-out generalization.",
+  "targets": "native L100 and native L160 for 1M / L500 for SIFT100M",
+  "exact": "equal integer total_hits / 10000; no interpolation, no mixed policies, no output truncation",
+  "search": "existing grid first; then two larger L: ceil(1.5*referenceL), 2*referenceL; 12 bounded scalar bisection evaluations per L, plus up to 8 local probes per family/target; nonmonotonicity possible; no guarantee exact feasible",
+  "selection_objective": "exact and active preferred, then absolute hit gap, then measured P95; inactive exact shown separately",
+  "active": "Heuristic/Ours: skips>0; ET: stopped fraction>0; Joint: skips>0 AND stopped fraction>0",
+  "repeats": 9,
+  "metrics": "Recall,P50,P95,P99,mean,QPS,physical_bytes,reads,expansions,skips,model_calls,ET_calls,IO; median nine cyclic-order timing repeats",
+  "controls": "same binary/index/model/query/K10/beam4/threads4/cache10000/warm128 as original; Linux/Reader/4096 equality and zero swap checks inherited",
+  "budget": "at most32 NEW probes per family/target; 2 targets x8 families x3 datasets; old grid reused read-only"
+}

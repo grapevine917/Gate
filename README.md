@@ -6,20 +6,21 @@ Gate is a research codebase for learned pruning in SSD-backed graph approximate 
 
 ## Repository contents
 
-- `DiskANN/` contains the DiskANN source snapshot used by this project, including local changes and the upstream MIT license.
+- DiskANN source is maintained separately in [grapevine917/DiskANN](https://github.com/grapevine917/DiskANN), branch `research/learned-gate`. Clone it into `DiskANN/`; it is not embedded in this repository.
 - `experiments/` contains experiment drivers, analysis and report sources, protocols, and selected compact results.
 - Large datasets, graph indexes, trained model binaries, per-query traces, virtual environments, and temporary run outputs are excluded. Obtain datasets from their original providers and follow their terms. Follow each model's and dependency's license when redistributing it.
-- `experiments/p0_old_models_expanded/` contains the expanded tuning experiment. Its scripts and protocol are included; generated run state is excluded.
+- `experiments/p0_old_models_expanded/` contains the completed expanded tuning experiment. Generated run state is excluded.
+- `experiments/server/` provides an isolated server-rerun entry point, an asset manifest, and a native frozen-model verifier. Start with the [server runbook](docs/deployment/SERVER_RUNBOOK.md).
 
 ## Reproducibility
 
-Experiments require the matching dataset, graph index, model weights, and native dependencies described by each experiment's protocol. Install dependencies in a separate environment, prepare the required artifacts, then use the experiment's documented build and run scripts. Do not run every historical experiment directory as one pipeline; each has its own protocol and prerequisites.
+Experiments require the matching dataset, graph index, model weights, and native dependencies described by each experiment's protocol. Large artifacts are transferred separately, not downloaded automatically. The server entry point checks the asset list, creates a new workspace, rebuilds native runners, verifies frozen model outputs, and reruns validation before expanded tuning. Do not copy historical result caches into a new server run or run every historical experiment directory as one pipeline.
 
-The completed old-model comparison is documented in `experiments/p0_old_models_rerun/REPORT.md`. The strict-recall descriptive comparison is documented in `experiments/p0_old_models_recall_matched/REPORT.md`. These reports state the measured configurations and limitations. The expanded tuning experiment is still running and does not yet have final results.
+The completed old-model comparison is documented in `experiments/p0_old_models_rerun/REPORT.md`. The strict-recall descriptive comparison is documented in `experiments/p0_old_models_recall_matched/REPORT.md`. The expanded tuning experiment completed on 2026-10-28; its report is in `experiments/p0_old_models_expanded/REPORT.md`. These are historical measurements in the recorded WSL environment, not evidence that a new server build has been validated. Validation-selected results and descriptive test-grid frontiers are reported separately.
 
 ## DiskANN source and license
 
-`DiskANN/` is based on Microsoft's [DiskANN](https://github.com/microsoft/DiskANN) and includes project-specific modifications. The upstream MIT license is retained in `DiskANN/LICENSE`. This repository does not relicense third-party components; consult the license files and notices for each dependency.
+The separate DiskANN fork is based on Microsoft's [DiskANN](https://github.com/microsoft/DiskANN) and retains the upstream MIT license. Frozen experiment overlays copied from DiskANN are accompanied by `experiments/DISKANN_LICENSE`. This repository does not relicense third-party components; consult their license files and notices.
 
 ## Status
 

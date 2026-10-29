@@ -1,0 +1,362 @@
+{
+  "files": [
+    {
+      "dataset": "sift1m",
+      "path": "experiments/main_comparison/models/lr.bin",
+      "bytes": 220,
+      "sha256": "fbaa767394305cc962ecc03ada94197bb859806971c5e6fafcb4499a7ab3fefd"
+    },
+    {
+      "dataset": "sift1m",
+      "path": "experiments/main_comparison/models/state.bin",
+      "bytes": 42644,
+      "sha256": "bb539070257806d1fabdf687bc0b11b2382dfb4cf21704bb97069162559a8af5"
+    },
+    {
+      "dataset": "sift1m",
+      "path": "experiments/main_comparison/models/xgb.bin",
+      "bytes": 242696,
+      "sha256": "ec86e0e66b4479fbf171953d1021347da2643110b2d33a35bbccdd9d67314262"
+    },
+    {
+      "dataset": "sift1m",
+      "path": "experiments/main_comparison/models/et.bin",
+      "bytes": 42644,
+      "sha256": "389e2049d0c894af20059d62d7ebe1ac0f343f22f3b98c545601d11657411c01"
+    },
+    {
+      "dataset": "sift1m",
+      "path": "experiments/main_comparison/models/native_check.bin",
+      "bytes": 1200004,
+      "sha256": "b003419447d63176ab3c7c07c91112f3c857b19bd1f934747aa0430de22298d9"
+    },
+    {
+      "dataset": "sift1m",
+      "path": "experiments/main_comparison/models/et_check.bin",
+      "bytes": 144004,
+      "sha256": "11ad016920f124d2dc38e43cef86563954e66e6f9e2a351292d34efdfe47ab43"
+    },
+    {
+      "dataset": "sift1m",
+      "path": "experiments/main_comparison/data/validation.fbin",
+      "bytes": 512008,
+      "sha256": "e27c52615821ab26643065c402a2ae0372a1b599c07510077d0e21c18a01a757"
+    },
+    {
+      "dataset": "sift1m",
+      "path": "experiments/main_comparison/data/validation.gt",
+      "bytes": 400008,
+      "sha256": "a5c7b0dbebcd0621219976eddd81ef4860dfa125a16114a40ce9afd7c520adec"
+    },
+    {
+      "dataset": "sift1m",
+      "path": "experiments/main_comparison/data/test.fbin",
+      "bytes": 512008,
+      "sha256": "2462b7825563680abd67541a0f7a0a634e0bf10154e2d81845010027e3c5059b"
+    },
+    {
+      "dataset": "sift1m",
+      "path": "experiments/main_comparison/data/test.gt",
+      "bytes": 400008,
+      "sha256": "398def1ce3388d120cb590f2b85d7362e088dcd97cb751318ddcfd941c604481"
+    },
+    {
+      "dataset": "sift1m",
+      "path": "experiments/main_comparison/data/train_ids.npy",
+      "bytes": 4928,
+      "sha256": "bda143e986328958d47103881a9d9da361843d805fea52c825858efb51ef6592"
+    },
+    {
+      "dataset": "sift1m",
+      "path": "experiments/main_comparison/data/validation_ids.npy",
+      "bytes": 4128,
+      "sha256": "f00088d91cf0e9a654b904a585ca5cc8cc218dfa978fbf8b0a9683271cde45c0"
+    },
+    {
+      "dataset": "sift1m",
+      "path": "experiments/main_comparison/data/test_ids.npy",
+      "bytes": 4128,
+      "sha256": "0998b7bffa5843b509989acb71ea2a5a30598affca8fa095eff3b3abadb782b7"
+    },
+    {
+      "dataset": "sift1m",
+      "path": "experiments/main_comparison/TRAIN_COMPLETE.json",
+      "bytes": 863,
+      "sha256": "79ef3c893968d281cd1ed5c14067cfdc79b38112d41dc6d3365aa1aecb34a713"
+    },
+    {
+      "dataset": "sift1m",
+      "path": "experiments/sift1m_p0a_L100_train_compare/data/calibration.prune.bin",
+      "bytes": 8181040,
+      "sha256": "4242674a9e5def5d2b1d5d9f450a5798e93ce931762aeae5133f740354f49eb2"
+    },
+    {
+      "dataset": "sift1m",
+      "path": "experiments/main_comparison/runs/validation/DiskANN_L100_r0.ids",
+      "bytes": 80000,
+      "sha256": "e9de766c0cb4ac2bff1644b331b94ae286f2b55ede902c58d7826c50dbc9ad18"
+    },
+    {
+      "dataset": "sift1m",
+      "path": "experiments/sift1m/index_disk.index",
+      "bytes": 819204096,
+      "header4096_sha256": "fb233714f592efa1c62fd2432e886d974e46fcf3192623411da3b7ca8b3144b9"
+    },
+    {
+      "dataset": "sift1m",
+      "path": "experiments/sift1m/index_pq_compressed.bin",
+      "bytes": 34000008,
+      "header4096_sha256": "0d63096444cc8364bcff1629f52fe13be04fb7f7410c5d9c3626c5f64c1f5ddf"
+    },
+    {
+      "dataset": "sift1m",
+      "path": "experiments/sift1m/index_pq_pivots.bin",
+      "bytes": 135844,
+      "header4096_sha256": "87b60ad02a245946c3879329298c8f00f3dd69a0946a4361c16d2e34e28cde68"
+    },
+    {
+      "dataset": "deep1m",
+      "path": "experiments/deep_p0/models/lr.bin",
+      "bytes": 220,
+      "sha256": "08a137ff8504eca7f02b9d284f178eb81abdf3bdac70aefb35e2b0711c04f74b"
+    },
+    {
+      "dataset": "deep1m",
+      "path": "experiments/deep_p0/models/state.bin",
+      "bytes": 42644,
+      "sha256": "0bc0a2d0e84428a179532dd9c3d89c450fd099eaeb0fc25006da92f19aa5f573"
+    },
+    {
+      "dataset": "deep1m",
+      "path": "experiments/deep_p0/models/xgb.bin",
+      "bytes": 259116,
+      "sha256": "e870dc06a7dd1862eb13c12f250f965c4bf839af20ee598931d2e76ba583cf12"
+    },
+    {
+      "dataset": "deep1m",
+      "path": "experiments/deep_p0/models/et.bin",
+      "bytes": 42644,
+      "sha256": "897fda0745f1fbd5b03620c47d9073bdf55a44abf5af138f12fd8b2c06c39e78"
+    },
+    {
+      "dataset": "deep1m",
+      "path": "experiments/deep_p0/models/native_check.bin",
+      "bytes": 944004,
+      "sha256": "bd43f6f139e217c4d9f6fd630e25e49a76ca73f83de71bb0dcc1ddbd736abedf"
+    },
+    {
+      "dataset": "deep1m",
+      "path": "experiments/deep_p0/models/et_check.bin",
+      "bytes": 144004,
+      "sha256": "dfbe17e7b13275447574f5c456661de37fb80afe51856d07115cc3fd9ada12a5"
+    },
+    {
+      "dataset": "deep1m",
+      "path": "experiments/deep_p0/data/validation.fbin",
+      "bytes": 384008,
+      "sha256": "ffdd9bad7043eb67227a7ecca20b392d5e9a69be3265b92c78e05a442f1c797e"
+    },
+    {
+      "dataset": "deep1m",
+      "path": "experiments/deep_p0/data/validation.gt",
+      "bytes": 400008,
+      "sha256": "a61b1517405aa92d708f432084914694b4ff732b9b6153537b300e6e979171a5"
+    },
+    {
+      "dataset": "deep1m",
+      "path": "experiments/deep_p0/data/test.fbin",
+      "bytes": 384008,
+      "sha256": "c3a3db055a026da1f199af319294e9fba47cf8ebb4fcbacc163bc6b903365e68"
+    },
+    {
+      "dataset": "deep1m",
+      "path": "experiments/deep_p0/data/test.gt",
+      "bytes": 400008,
+      "sha256": "47bd7cc01f0f4a3356ada58525b2b45ba9cbf7e2820315211d543c7c6d035905"
+    },
+    {
+      "dataset": "deep1m",
+      "path": "experiments/deep_p0/data/train_ids.npy",
+      "bytes": 9728,
+      "sha256": "8bba95f99d586cc0af64d9f3a3084a00ee4783f141b5175eeb6ba66a4518bb24"
+    },
+    {
+      "dataset": "deep1m",
+      "path": "experiments/deep_p0/data/validation_ids.npy",
+      "bytes": 8128,
+      "sha256": "03714f0826d0bdef1b7eebfe2e9096d01c6e06d03a60bbcf9b26168bd94288fe"
+    },
+    {
+      "dataset": "deep1m",
+      "path": "experiments/deep_p0/data/test_ids.npy",
+      "bytes": 8128,
+      "sha256": "4422922010ba431760916e6c91712f6c9fcabcdbf17a6c772b44681f928f5cb2"
+    },
+    {
+      "dataset": "deep1m",
+      "path": "experiments/deep_p0/TRAIN_COMPLETE.json",
+      "bytes": 1021,
+      "sha256": "025c031058810f0a28c534fbcdafdee063a8be0209e9a46d7fb2d08be1e7c4a3"
+    },
+    {
+      "dataset": "deep1m",
+      "path": "experiments/deep_p0/data/validation.prune.bin",
+      "bytes": 8965920,
+      "sha256": "10e518833362b3c3df91f469372494ebd615ce1e91aa7a9afff3e114b6bcc5d2"
+    },
+    {
+      "dataset": "deep1m",
+      "path": "experiments/deep_p0/runs/validation/DiskANN_L100_p0_r0.ids",
+      "bytes": 80000,
+      "sha256": "2e6004a30d8c0711531e319816bb24c75d098d20654671dfa74c4cc4ccf5b2b4"
+    },
+    {
+      "dataset": "deep1m",
+      "path": "experiments/deep1m/index_disk.index",
+      "bytes": 682672128,
+      "header4096_sha256": "2c1fc6f4b66b3db59ee41603cdff9882df149a808e5b8a1b6b9196737a10b54c"
+    },
+    {
+      "dataset": "deep1m",
+      "path": "experiments/deep1m/index_pq_compressed.bin",
+      "bytes": 34000008,
+      "header4096_sha256": "0cece4cd39070a40828f48765cad94be44e8785c2ab9daed0a60fe92e9177600"
+    },
+    {
+      "dataset": "deep1m",
+      "path": "experiments/deep1m/index_pq_pivots.bin",
+      "bytes": 102948,
+      "header4096_sha256": "b41e23b1a508ee17ba2a39c385120681a5aff38d7aac103ac5101657cfdadc60"
+    },
+    {
+      "dataset": "sift100m",
+      "path": "experiments/sift100m_p0/models/lr.bin",
+      "bytes": 220,
+      "sha256": "485b4c39dc1583e4d7bd4b46838cad4889bf0d11cf1c58427523f2148e821faa"
+    },
+    {
+      "dataset": "sift100m",
+      "path": "experiments/sift100m_p0/models/state.bin",
+      "bytes": 42644,
+      "sha256": "ecb99c36016d530d076969a626393e1f352e7710c7398988afc01811ef05d499"
+    },
+    {
+      "dataset": "sift100m",
+      "path": "experiments/sift100m_p0/models/xgb.bin",
+      "bytes": 260468,
+      "sha256": "860ad5dc54eb7c40b2dcf19ef2ab4ad2eaafa3851ea0f4083d780ff4290c4174"
+    },
+    {
+      "dataset": "sift100m",
+      "path": "experiments/sift100m_p0/models/et.bin",
+      "bytes": 42644,
+      "sha256": "9120d8da573778be0d0b6f4730087aeb8f751b316c852c9b17155fadd899148e"
+    },
+    {
+      "dataset": "sift100m",
+      "path": "experiments/sift100m_p0/models/native_check.bin",
+      "bytes": 1200004,
+      "sha256": "2be46de4e5154b1a85a61e87a6efbcb94f08f90fde85701998096ccd7dd74cb9"
+    },
+    {
+      "dataset": "sift100m",
+      "path": "experiments/sift100m_p0/models/et_check.bin",
+      "bytes": 144004,
+      "sha256": "ec893c427f22e996b4dd9ea7a7ab20b564659cfe536a7c94973fc7e012e192c5"
+    },
+    {
+      "dataset": "sift100m",
+      "path": "experiments/sift100m_p0/data/validation.u8bin",
+      "bytes": 128008,
+      "sha256": "91d9b29e5875e998ef0ef940910cb537c14e71db108222058d1d7b68f0c32d8c"
+    },
+    {
+      "dataset": "sift100m",
+      "path": "experiments/sift100m_p0/data/validation.gt",
+      "bytes": 400008,
+      "sha256": "64d7a5b8e4a3694a65f739eec68b94664e8e729780db464bbc561d13694bbbb9"
+    },
+    {
+      "dataset": "sift100m",
+      "path": "experiments/sift100m_p0/data/test.u8bin",
+      "bytes": 128008,
+      "sha256": "6cad5e228f4ded91a6c058724e49e393625c917179b909cb0933e65055a7559d"
+    },
+    {
+      "dataset": "sift100m",
+      "path": "experiments/sift100m_p0/data/test.gt",
+      "bytes": 400008,
+      "sha256": "02b0f865b8aa9f4e083b940f905783f4918882865a1b06d89c66efd21249aa0a"
+    },
+    {
+      "dataset": "sift100m",
+      "path": "experiments/sift100m_p0/data/train_ids.npy",
+      "bytes": 9728,
+      "sha256": "086bbe5ff8d6ecc7b908a2e4de643f984a4ce08a0e71daf8b61bbbf898403209"
+    },
+    {
+      "dataset": "sift100m",
+      "path": "experiments/sift100m_p0/data/validation_ids.npy",
+      "bytes": 8128,
+      "sha256": "03714f0826d0bdef1b7eebfe2e9096d01c6e06d03a60bbcf9b26168bd94288fe"
+    },
+    {
+      "dataset": "sift100m",
+      "path": "experiments/sift100m_p0/data/test_ids.npy",
+      "bytes": 8128,
+      "sha256": "4422922010ba431760916e6c91712f6c9fcabcdbf17a6c772b44681f928f5cb2"
+    },
+    {
+      "dataset": "sift100m",
+      "path": "experiments/sift100m_p0/TRAIN_COMPLETE.json",
+      "bytes": 1024,
+      "sha256": "21f8a703a2af52c194043eaec5e101cda22f07ce0c7bfcf3c8620533c5961884"
+    },
+    {
+      "dataset": "sift100m",
+      "path": "experiments/sift100m_p0/data/validation.prune.bin",
+      "bytes": 9316480,
+      "sha256": "9c05c5fc691fb6f9d8e1b873c607089b0baacddb8a8d973c5266db89798f19c2"
+    },
+    {
+      "dataset": "sift100m",
+      "path": "experiments/sift100m_p0/runs/validation/DiskANN_L100_p0_r0.ids",
+      "bytes": 80000,
+      "sha256": "318d962302f191e1a2c8797f6204a7ac0ee6a70b95c4f627ab98211610ca2112"
+    },
+    {
+      "dataset": "sift100m",
+      "path": "experiments/sift100m_p0/index/ann_disk.index",
+      "bytes": 40960004096,
+      "header4096_sha256": "dfbbbab4d075fee6e08b2462d32a500b8a6d82aebce315cb361a9d6ae01e40ba"
+    },
+    {
+      "dataset": "sift100m",
+      "path": "experiments/sift100m_p0/index/ann_pq_compressed.bin",
+      "bytes": 3400000008,
+      "header4096_sha256": "d3ca128468b9e59c2f8a0abd8b97aac72578a3387d30e9a4013af0c606218588"
+    },
+    {
+      "dataset": "sift100m",
+      "path": "experiments/sift100m_p0/index/ann_pq_pivots.bin",
+      "bytes": 135844,
+      "header4096_sha256": "87b60ad02a245946c3879329298c8f00f3dd69a0946a4361c16d2e34e28cde68"
+    },
+    {
+      "dataset": "sift100m",
+      "path": "experiments/sift100m_p0/index/ann_disk.index_centroids.bin",
+      "bytes": 8712,
+      "optional_present": true,
+      "header4096_sha256": "3c8b97ab24cf207134360bcf2e83f9a4247891bfe087c775e772aa7c2616fa1c"
+    },
+    {
+      "dataset": "sift100m",
+      "path": "experiments/sift100m_p0/index/ann_disk.index_medoids.bin",
+      "bytes": 76,
+      "optional_present": true,
+      "header4096_sha256": "7b23c6212490cfd4c5bf746b9b642be44ff321a853b37174517373e4fe918d3e"
+    }
+  ],
+  "bytes": 45966278192,
+  "note": "Frozen input files for the three-dataset static mixed-L server rerun. Relative paths under a separately transferred asset root. No model/data contents are published here. Large index entries have size and 4096-byte header hash only, not full-content verification."
+}

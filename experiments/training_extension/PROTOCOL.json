@@ -1,0 +1,34 @@
+{
+  "max_epochs": 160,
+  "seeds": [
+    20261030,
+    20261022,
+    20261023
+  ],
+  "adapted_seeds": [
+    20261021,
+    20261022,
+    20261023
+  ],
+  "learning_rates": {
+    "1-40": 0.001,
+    "41-80": 0.0003,
+    "81-120": 0.0001,
+    "121-160": 3e-05
+  },
+  "batch_size": 2048,
+  "optimizer": "Adam weight_decay=1e-4",
+  "architecture": "17-128-64-1; ReLU hidden; sigmoid output",
+  "training": "Fixed existing data; internal holdout of 200 disjoint queries; 3 seeds, evaluate all160 epochs; choose seed+epoch on internal loss only; refit all1200 training queries using selected seed, epoch and fixed LR schedule. No external validation/test used for fitting or checkpoint selection.",
+  "tasks": [
+    "gate",
+    "et_unpruned",
+    "et_adapted"
+  ],
+  "limits": [
+    "Same finite training examples; longer training does not add query diversity",
+    "Gate uses contribution proxy retain labels, not counterfactual recall risk",
+    "ET labels are absolute prefix GT recall",
+    "Previously observed benchmark queries; exploratory"
+  ]
+}

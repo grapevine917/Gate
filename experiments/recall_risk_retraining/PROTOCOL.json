@@ -1,0 +1,63 @@
+{
+  "dataset": "SIFT1M",
+  "base_vectors": 1000000,
+  "training_queries": 1200,
+  "internal_holdout_queries": 200,
+  "validation_queries": 1000,
+  "test_queries": 1000,
+  "seed": 20261101,
+  "deployment_L": 100,
+  "teacher_L": [
+    300,
+    1000
+  ],
+  "K": 10,
+  "beam": 4,
+  "threads": 4,
+  "cache_nodes": 10000,
+  "contexts": [
+    "unpruned L100",
+    "old pure-L100 MLP static",
+    "old pure-L100 LR static"
+  ],
+  "old_taus": [
+    0.04251997172832489,
+    0.024956785142421722
+  ],
+  "features": "same17 pre-IO state features only; no node/queryID, teacher flags, GT, baseline scores, future outcomes as inputs",
+  "teacher": "fresh admitted-edge first-discovery parent paths to true GT Top10 reached by L300/L1000; union marks candidate path strata; GT exact is authoritative, teacher recall is not assumed perfect",
+  "sampling": "disjoint teacher-path / late-nonpath(rank>72 AND completed>100) / other strata; per context caps train6/4/6, validation/test3/2/3; uniform within each stratum, inverse inclusion weight population/sample; deterministic seed; all strata and original Keep+Skip decisions eligible",
+  "label": "risk=1 iff keep_hits>skip_hits, severity=max(0,keep_hits-skip_hits); hits against exactGT@10; signed IO=keep_reads-skip_reads; record identity losses/gains separately",
+  "counterfactual": "rerun identical query prefix; exact candidate ordinal/node/byte-identical17D state checked; force one Keep or Skip, original frozen policy thereafter; original decision branch reused as baseline; sham per query/context verifies IDs/reads/expansions",
+  "matched_proxy": "same sampled states/weights as risk training; label admitted>0 OR final keep-branch Top10; isolates label vs sampling changes",
+  "models": "fresh17D LR and17-128-64-1 MLP for risk and matched_proxy; weighted BCE binary risk or proxy, same training inputs; train-only normalization; query holdout checkpoint selection then refit1200; constant feature weights zero; risk score itself is keep score",
+  "online": "static threshold only; no dynamic schedule; oldLR/MLP, matchedProxyLR/MLP, riskLR/MLP, shared DiskANN/heuristic; validate finite fixed threshold grid then lock before test; select minimum physical reads subject to old static validation Recall floor; fallback no-prune allowed; report actual test residual and timing",
+  "threshold_grid": [
+    0,
+    1e-05,
+    3e-05,
+    0.0001,
+    0.0003,
+    0.001,
+    0.003,
+    0.01,
+    0.02,
+    0.03,
+    0.05,
+    0.075,
+    0.1,
+    0.15,
+    0.2,
+    0.3,
+    0.5,
+    0.7,
+    0.9
+  ],
+  "timing": "8 selected method12 balanced cyclic repeats, optional default-reference configs share pool; physicalIO strict; no swap",
+  "limits": [
+    "single-node risks conditional on collection policy, not additive joint harm",
+    "finite policy mixture does not cover all new-model states",
+    "wide teacher helps sampling/path discovery; exact GT already available so does not add unknown true neighbors",
+    "one training seed and previously examined heldout queries; exploratory"
+  ]
+}

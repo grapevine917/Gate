@@ -1,0 +1,263 @@
+{
+  "dataset": "SIFT100M",
+  "N": 100000000,
+  "dimensions": 128,
+  "index": "/home/lxyue/projects/learned-gate/experiments/sift100m_p0/index/ann",
+  "old_model_parent": "/home/lxyue/projects/learned-gate/experiments/sift100m_p0",
+  "models": [
+    "lr",
+    "xgb",
+    "state"
+  ],
+  "model_training": "reuse existing matched mixed-L proxy-label LR/XGB/state MLP and matching ET; no weights trained, edited, or replaced",
+  "training_L": [
+    15,
+    30,
+    50,
+    100,
+    160,
+    300,
+    500,
+    1000
+  ],
+  "beam": 4,
+  "K": 10,
+  "threads": 4,
+  "MKL_threads": 1,
+  "cache_nodes": 10000,
+  "seed": 20261102,
+  "validation_queries": 1000,
+  "test_queries": 1000,
+  "P0_A": {
+    "L": 100,
+    "keys": [
+      "DiskANN_L100",
+      "Heuristic_L100_p3",
+      "Ours_lr_L100_p4",
+      "Ours_xgb_L100_p4",
+      "Ours_state_L100_p4"
+    ],
+    "repeats": 15,
+    "ordering": "5 cyclic positions x3",
+    "tau": "native validation L100 cache-miss retain-FNR1%, each model independently calibrated",
+    "heuristic": "rank>72 AND completed>100; cache misses only"
+  },
+  "P0_B": {
+    "families": [
+      "DiskANN",
+      "ET",
+      "Heuristic",
+      "Joint_lr",
+      "Joint_state",
+      "Joint_xgb",
+      "Ours_lr",
+      "Ours_state",
+      "Ours_xgb"
+    ],
+    "per_family_configs": 64,
+    "L": [
+      15,
+      30,
+      50,
+      100,
+      160,
+      300,
+      500,
+      1000
+    ],
+    "baseline_L": [
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      23,
+      25,
+      27,
+      30,
+      32,
+      34,
+      36,
+      39,
+      41,
+      44,
+      47,
+      50,
+      55,
+      60,
+      65,
+      71,
+      77,
+      84,
+      92,
+      100,
+      106,
+      112,
+      119,
+      126,
+      134,
+      142,
+      151,
+      160,
+      173,
+      187,
+      202,
+      219,
+      237,
+      256,
+      277,
+      300,
+      320,
+      341,
+      363,
+      387,
+      413,
+      440,
+      469,
+      500,
+      545,
+      595,
+      649,
+      707,
+      771,
+      841,
+      917,
+      1000
+    ],
+    "risks": [
+      0,
+      0.001,
+      0.0025,
+      0.005,
+      0.01,
+      0.02,
+      0.05,
+      0.1
+    ],
+    "ET_thresholds": [
+      1.1,
+      0.999,
+      0.995,
+      0.99,
+      0.98,
+      0.95,
+      0.9,
+      0.8
+    ],
+    "heuristic_fraction_pairs": [
+      [
+        1.0,
+        -1
+      ],
+      [
+        0.98,
+        1.0
+      ],
+      [
+        0.92,
+        1.04
+      ],
+      [
+        0.72,
+        1.0
+      ],
+      [
+        0.64,
+        0.92
+      ],
+      [
+        0.5,
+        0.9
+      ],
+      [
+        0.25,
+        0.75
+      ],
+      [
+        0.1,
+        0.5
+      ]
+    ],
+    "joint_pairs": [
+      [
+        0,
+        0
+      ],
+      [
+        4,
+        0
+      ],
+      [
+        0,
+        3
+      ],
+      [
+        2,
+        1
+      ],
+      [
+        3,
+        2
+      ],
+      [
+        4,
+        3
+      ],
+      [
+        5,
+        4
+      ],
+      [
+        6,
+        5
+      ]
+    ],
+    "targets": [
+      90.0,
+      95.0,
+      98.0,
+      99.0,
+      99.5,
+      99.7,
+      99.9
+    ],
+    "selection": "Validation-only per-family Recall constraint and per-objective costs; lock before test; full frozen test-grid frontiers descriptive; never interpolate actual measured costs",
+    "repeat": "all test configs once; union of every objective frontier and validation-locked choices to3 until all displayed frontier configs have >=3 repeats; P0A pool shared",
+    "baseline": "64 distinct L incl every learned L; tuned strong native baseline"
+  },
+  "timing": "datasets serial; configs shuffled into small mixed-family batches; shared controls across Ours versions;128-query warmup; model/index loads excluded; scoring/features/search/IO included",
+  "physical_IO": "Actual Linux proc_self_io read_bytes in timed search equals metered reader bytes and4096*query_reads; no tolerance; archive and retry anomalies; reject swapping",
+  "calibration": "same full L100 validation cache-miss candidate proxy labels per dataset, no test outcomes",
+  "limits": [
+    "previously observed benchmark queries, exploratory",
+    "single existing seed; timing repeats omit model-training variation",
+    "equal finite64-config budgets do not prove global policy optimality",
+    "8 declared joint pairs, not exhaustive Cartesian sweep",
+    "ET trained on unpruned prefixes; joint policy can shift trajectory",
+    "float1M vs uint8 compressed100M implementations differ; cross-dataset is not pure size scaling"
+  ],
+  "source_hashes": {
+    "/home/lxyue/projects/learned-gate/experiments/p0_old_models_rerun/sift100m/native/search": "97e3f1aa8934cf51c072d560c526b4dcb7899e84b2fd26ea0a23501436f9a4e6",
+    "/home/lxyue/projects/learned-gate/experiments/p0_old_models_rerun/search.cpp": "09496485b0d3ff88a9a3ac36ea170b8bd9df0efb87ed97949b2ce68d592fe7e3",
+    "/home/lxyue/projects/learned-gate/experiments/sift100m_p0/TRAIN_COMPLETE.json": "21f8a703a2af52c194043eaec5e101cda22f07ce0c7bfcf3c8620533c5961884",
+    "/home/lxyue/projects/learned-gate/experiments/sift100m_p0/data/validation.prune.bin": "9c05c5fc691fb6f9d8e1b873c607089b0baacddb8a8d973c5266db89798f19c2",
+    "/home/lxyue/projects/learned-gate/experiments/sift100m_p0/models/lr.bin": "485b4c39dc1583e4d7bd4b46838cad4889bf0d11cf1c58427523f2148e821faa",
+    "/home/lxyue/projects/learned-gate/experiments/sift100m_p0/models/xgb.bin": "860ad5dc54eb7c40b2dcf19ef2ab4ad2eaafa3851ea0f4083d780ff4290c4174",
+    "/home/lxyue/projects/learned-gate/experiments/sift100m_p0/models/state.bin": "ecb99c36016d530d076969a626393e1f352e7710c7398988afc01811ef05d499",
+    "/home/lxyue/projects/learned-gate/experiments/sift100m_p0/models/et.bin": "9120d8da573778be0d0b6f4730087aeb8f751b316c852c9b17155fadd899148e",
+    "/home/lxyue/projects/learned-gate/experiments/sift100m_p0/data/validation.u8bin": "91d9b29e5875e998ef0ef940910cb537c14e71db108222058d1d7b68f0c32d8c",
+    "/home/lxyue/projects/learned-gate/experiments/sift100m_p0/data/validation.gt": "64d7a5b8e4a3694a65f739eec68b94664e8e729780db464bbc561d13694bbbb9",
+    "/home/lxyue/projects/learned-gate/experiments/sift100m_p0/data/test.u8bin": "6cad5e228f4ded91a6c058724e49e393625c917179b909cb0933e65055a7559d",
+    "/home/lxyue/projects/learned-gate/experiments/sift100m_p0/data/test.gt": "02b0f865b8aa9f4e083b940f905783f4918882865a1b06d89c66efd21249aa0a",
+    "/home/lxyue/projects/learned-gate/experiments/sift100m_p0/data/train_ids.npy": "086bbe5ff8d6ecc7b908a2e4de643f984a4ce08a0e71daf8b61bbbf898403209",
+    "/home/lxyue/projects/learned-gate/experiments/sift100m_p0/data/validation_ids.npy": "03714f0826d0bdef1b7eebfe2e9096d01c6e06d03a60bbcf9b26168bd94288fe",
+    "/home/lxyue/projects/learned-gate/experiments/sift100m_p0/data/test_ids.npy": "4422922010ba431760916e6c91712f6c9fcabcdbf17a6c772b44681f928f5cb2"
+  }
+}

@@ -1,0 +1,3 @@
+#include "online_gate.h"
+#include <iostream>
+int main(int argc,char**argv){if(argc!=2)return 2;mkl_set_num_threads_local(1);std::string m=argv[1];diskann::OnlineGate lr(m+"/lr.bin","",0),st(m+"/state.bin","",0),et(m+"/et.bin","",0);diskann::OnlineGate* models[]={&lr,&st,&et};std::ifstream f(m+"/check.bin",std::ios::binary);uint32_t n;f.read((char*)&n,4);float row[20],q[128]={},err[3]={};for(unsigned i=0;i<n;++i){f.read((char*)row,sizeof(row));for(int k=0;k<3;++k)err[k]=std::max(err[k],std::abs(models[k]->score(q,0,row)-row[17+k]));}if(!f)return 3;std::cout<<"{\"LR\":"<<err[0]<<",\"MLP\":"<<err[1]<<",\"ET\":"<<err[2]<<",\"samples\":"<<n<<"}\n";for(float x:err)if(x>2e-5)return 4;}

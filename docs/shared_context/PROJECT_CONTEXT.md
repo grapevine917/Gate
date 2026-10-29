@@ -15,8 +15,8 @@
 - Build and experiment environment: local Ubuntu filesystem
 
 ## Current Git Checkpoints
-- Gate master: 56b8c3d
-- DiskANN research branch: c9e6122
+- Gate master: use `git rev-parse HEAD`; the server-preparation publication follows 7254d3b.
+- DiskANN research branch: 73583a23cd6fab84b63beb2d95ee72ef2cc43eb1
 - Earlier DiskANN commit: 46aacd0
 
 ## Important Constraints
@@ -29,3 +29,9 @@
 The research implementation has been committed and pushed to GitHub.
 Compilation correctness, algorithm correctness, Recall, latency, and I/O performance
 must be tracked separately and must not be assumed validated from Git commits alone.
+
+Historical three-dataset P0-A and expanded P0-B experiments completed in WSL.
+The 2026-10-29 publication adds an isolated server entry point and verifies a
+fresh local native build, frozen scores, calibration and 42 smoke configurations.
+It does not mean an SSH server has been tested. See
+`docs/deployment/PUBLICATION_VALIDATION.md` and `SERVER_RUNBOOK.md`.

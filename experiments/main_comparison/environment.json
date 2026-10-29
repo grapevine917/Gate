@@ -1,0 +1,20 @@
+{
+  "platform": "Linux-6.6.87.2-microsoft-standard-WSL2-x86_64-with-glibc2.43",
+  "cpu": {
+    "vendor_id": "GenuineIntel",
+    "cpu family": "6",
+    "model": "183",
+    "model name": "Intel(R) Core(TM) i7-14650HX"
+  },
+  "logical_cpus": 24,
+  "query_threads": 4,
+  "MKL_threads_per_query": 1,
+  "RAM_memtotal": "MemTotal:       16224392 kB",
+  "versions": {
+    "numpy": "1.25.0",
+    "scipy": "1.15.3",
+    "torch": "2.14.1",
+    "scikit-learn": "1.9.1",
+    "xgboost-cpu": "3.2.0"
+  }
+}

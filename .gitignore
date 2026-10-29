@@ -79,6 +79,12 @@ docs/conversation/
 !experiments/p0_old_models_rerun/*/frontier_points.csv
 !experiments/p0_old_models_rerun/*/validation_locked_test.csv
 !experiments/p0_old_models_recall_matched/results.csv
+!experiments/p0_old_models_expanded/*/primary_configurations.csv
+!experiments/p0_old_models_expanded/*/validation_selected_test.csv
+!experiments/p0_old_models_expanded/*/strict_results.csv
+!experiments/model_feature_analysis/importance_summary.csv
+!experiments/model_feature_analysis/ranking_agreement.csv
+!experiments/model_feature_analysis/lr_coefficients.csv
 
 # Build products
 /DiskANN/.git/
@@ -87,3 +93,8 @@ docs/conversation/
 
 # DiskANN is maintained in its own GitHub repository
 /DiskANN/
+
+# New server run workspaces and local-only audit/source snapshots
+/server_runs/
+/transfer_assets/
+docs/deployment/*_20261029.json

@@ -1,27 +1,29 @@
 # Latest Handoff
 
+Updated: 2026-10-29.
+
 ## Current State
-- The Gate research repository has been pushed to GitHub.
-- The DiskANN research branch has been pushed to the personal fork.
-- Research source changes are committed in Git.
-- The outer Gate repository currently contains only its initial project setup
-  and has not yet incorporated the shared-context documents.
+
+- User authorized publishing missing experiment code for manual SSH-server work.
+- DiskANN research/learned-gate now includes XGGATE01 model support, commit 73583a23cd6fab84b63beb2d95ee72ef2cc43eb1.
+- Gate publication includes experiment source/protocols/reports, a fresh-workspace server runner, asset manifest and manual runbook. Large assets remain local.
+- Historical WSL experiments are completed; new server experiments have not run.
 
 ## Validation
-- Build status: Not yet confirmed in this workflow.
-- Recall validation: Not yet confirmed in this workflow.
-- Latency and I/O performance: Not yet confirmed in this workflow.
+
+- Fresh local CMake static-library build passed.
+- Three frozen dataset-specific runners and score checks passed.
+- New calibration/configuration preparation and 42 smoke configurations passed.
+- 6 workspace/input safeguard tests passed.
+- Details and limits: docs/deployment/PUBLICATION_VALIDATION.md.
 
 ## Next Actions
-1. Add and commit the shared-context documents.
-2. Verify the GitHub repositories and branch references.
-3. Review build and test procedures before running expensive experiments.
-4. Update this file after each meaningful implementation or experiment phase.
+
+1. User connects to the SSH server, clones both repositories as in SERVER_RUNBOOK.
+2. Install native/Python dependencies and transfer the 59 listed assets (~42.81GiB).
+3. Create a fresh workspace and build/prepare/smoke on that server.
+4. Run server P0-A/expanded P0-B only after checks pass; do not import WSL timings.
 
 ## Reporting Requirements
-For every completed task, record:
-- Commit hash and branch
-- Files changed
-- Commands executed
-- Actual test results
-- Known limitations and unresolved questions
+
+Record commit/branch, changed files, actual commands and results, hardware/storage, input hashes and unresolved limits. Do not treat code publication as server validation.

@@ -1,0 +1,37 @@
+{
+  "dataset": "SIFT1M",
+  "L": 100,
+  "beam": 4,
+  "K": 10,
+  "threads": 4,
+  "MKL_threads": 1,
+  "cache_nodes": 10000,
+  "queries": 1000,
+  "query_file": "/home/lxyue/projects/learned-gate/experiments/main_comparison/data/test.fbin",
+  "gt_file": "/home/lxyue/projects/learned-gate/experiments/main_comparison/data/test.gt",
+  "index": "/home/lxyue/projects/learned-gate/experiments/sift1m/index",
+  "model": "/home/lxyue/projects/learned-gate/experiments/main_comparison/models/lr.bin",
+  "gate_threshold": 0.0674629807472229,
+  "default_definition": "Frozen P0-C matched mixed-L17D LR, validation retain-FNR1% threshold. Weights differ from original P0-A MLP training; this is a replacement rerun, not a pure matched-training model ablation.",
+  "heuristic": {
+    "rank": 72,
+    "completed_expansions": 100,
+    "rule": "skip iff rank>72 and completed_expansions>100; cache hits protected",
+    "source": "existing Rank+Progress validation retain-FNR1% setting"
+  },
+  "cache_hit_protection": true,
+  "repeats": 9,
+  "order": "3 cyclic orders repeated 3 times; each method appears in each position 3 times",
+  "warmup_queries_per_config": 128,
+  "io": "O_DIRECT requests and actual requested lengths metered at reader; search-window /proc/self/io read_bytes delta; WSL2 guest block I/O, not SSD device NAND telemetry",
+  "timing": "search only, feature extraction and inference included; model/index/cache loading, warmup, GT and output excluded",
+  "limits": [
+    "Previously observed test set; exploratory",
+    "Fixed L100 is intentional P0-A; no equal-Recall or globally optimal frontier claim",
+    "Validation retain-FNR is not a bound on final Recall loss",
+    "LR is mixed-L trained from P0-C while original P0-A/B MLP was L100-trained; cross-version deltas include different weights/training.",
+    "Offline validation retain-FNR budget is not an online Recall bound."
+  ],
+  "experiment": "P0-A LR replacement; original MLP artifacts preserved",
+  "calibration": "LR_CALIBRATION.json"
+}

@@ -1,0 +1,13 @@
+{
+  "dataset": "SIFT1M",
+  "weights": "current main comparison old MIXED-L LR/StateMLP/XGB, trained on1200 queries; same weights as P0-A/B",
+  "analysis_scope": "existing baseline-L100 VALIDATION pre-I/O states,1000 validation queries, cache misses only; NOT full multi-L evaluation, not an online latency experiment",
+  "input": "17 pre_io_state columns; no new query/index search; no retraining",
+  "comparison": "identical rows/labels, raw-feature permutations shared across models",
+  "methods": "10 repeats of each single feature and jointly shuffled Global11/Candidate6/RankProgress/Distance/All17 groups; frozen original validation thresholds at retain-FNR budgets0.1% and1%",
+  "thresholds": "reuse frozen p0_old_models_rerun/sift1m thresholds; do not recalibrate after permutation",
+  "metrics": "AUC drop, logloss increase, fixed-threshold skip/FNR changes; shuffle SD is not a confidence interval",
+  "uncertainty": "paired query bootstrap of averaged per-query logloss increase,1000 resamples; permutation still may form off-manifold states; no causal or retrained-necessity claim",
+  "coefficients": "LR standardized coefficients only, not directly comparable with MLP/XGB scores; correlated features can share coefficients",
+  "scheduling": "start only after expanded P0-B root COMPLETE plus released run.lock; all compute single-thread; no concurrent formal graph timing"
+}

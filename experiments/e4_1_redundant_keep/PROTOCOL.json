@@ -1,0 +1,30 @@
+{
+  "stage": "E4-1",
+  "utc": "2026-10-19T03:17:23.512788+00:00",
+  "population": "ALL actual MLP Keep cache-miss positions in frozen E1 test trace; cached nodes are protected and not model predictions",
+  "queries": 1000,
+  "keep_positions": 93410,
+  "tau": 0.024352464824914932,
+  "L": 100,
+  "k": 10,
+  "beam": 4,
+  "threads": 4,
+  "cache_nodes": 10000,
+  "intervention": "one forced Skip at exact ordinal/node/byte-identical 17D state, fresh original MLP thereafter",
+  "delta_recall": "(after_hits-baseline_hits)/10",
+  "delta_io": "baseline_reads-after_reads",
+  "A": "delta_hits>=0 and delta_io>0",
+  "B": "delta_hits>=0 and delta_io<=0",
+  "C": "delta_hits<0 and delta_io>0",
+  "D": "delta_hits<0 and delta_io<=0",
+  "selection": "exhaustive; no outcome selection",
+  "difficulty": "post-hoc baseline Recall; not an online feature",
+  "frequency": "history model-invoked node occurrences only",
+  "confidence": "1000 query-cluster bootstrap replicates, seed 20261019",
+  "limits": [
+    "Previously observed test set",
+    "Single interventions cannot be summed as simultaneous pruning benefit",
+    "SSD requests are not physical device reads",
+    "Cache-hit candidates are excluded because model not invoked"
+  ]
+}

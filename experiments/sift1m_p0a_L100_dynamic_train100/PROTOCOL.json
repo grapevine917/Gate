@@ -1,0 +1,84 @@
+{
+  "dataset": "SIFT1M",
+  "base_vectors": 1000000,
+  "training_L": 100,
+  "inference_L": 100,
+  "beam": 4,
+  "K": 10,
+  "threads": 4,
+  "cache_nodes": 10000,
+  "validation_queries": 1000,
+  "test_queries": 1000,
+  "seed": 20261024,
+  "retrained": false,
+  "model_dir": "/home/lxyue/projects/learned-gate/experiments/sift1m_p0a_L100_train_compare/models_train100",
+  "dynamic_presets": [
+    [
+      0,
+      0,
+      1,
+      -1
+    ],
+    [
+      0,
+      3,
+      0.72,
+      1
+    ],
+    [
+      0,
+      5,
+      0.5,
+      0.9
+    ],
+    [
+      0,
+      6,
+      0.25,
+      0.75
+    ],
+    [
+      2,
+      5,
+      0.5,
+      0.9
+    ],
+    [
+      3,
+      6,
+      0.25,
+      0.75
+    ],
+    [
+      4,
+      7,
+      0.25,
+      0.75
+    ],
+    [
+      1,
+      7,
+      0.64,
+      0.92
+    ]
+  ],
+  "selection": "8 presets per model; validation minimumP95 subject to Recall>=saved trainL100 static default; lock before test",
+  "test": "16 repeats each for new dynamicMLP/dynamicLR; balanced alternating order; prior eight groups and shared controls reused, not rerun",
+  "limitations": [
+    "Existing inspected test split, exploratory",
+    "Reused control timings are from the preceding experiment, not contemporaneously interleaved with the two new groups; small timing changes may reflect temporal drift",
+    "Proxy FNR is not a final Recall guarantee"
+  ],
+  "source_hashes": {
+    "/home/lxyue/projects/learned-gate/experiments/sift1m_p0a_L100_train_compare/models_train100/state.bin": "d9defcd6020234a164d68e0bf3f2717abfc77cfc2b44628516df0398e7437f65",
+    "/home/lxyue/projects/learned-gate/experiments/sift1m_p0a_L100_train_compare/models_train100/lr.bin": "bf8575a8a9fe725a0d673541d3206460e2267c778f9a52e57873e53de041822c",
+    "/home/lxyue/projects/learned-gate/experiments/sift1m_p0a_L100_train_compare/native/search": "adaae8d6fad1e5f1f3d148119f9e1d540ac3e06774d9b28849dabfac4fe4d002",
+    "/home/lxyue/projects/learned-gate/experiments/sift1m_p0a_L100_train_compare/thresholds_L100.json": "46e724049cc38a9c4ea4b25737e3895562195b96aa51b2b6a0061a10fbae3077",
+    "/home/lxyue/projects/learned-gate/experiments/sift1m_p0a_L100_train_compare/summary.json": "443009540d6a70473e6ddfac7349ba9d12ca0440eded5aad9e011c3afd5b6299",
+    "/home/lxyue/projects/learned-gate/experiments/sift1m_p0a_L100_train_compare/validation.json": "236cc1c4f4d9cb5632e83e90275bbdb4fdb67e685f92d2a0b3b3034290f0acef",
+    "/home/lxyue/projects/learned-gate/experiments/sift1m_wide_p0/data/validation.fbin": "e27c52615821ab26643065c402a2ae0372a1b599c07510077d0e21c18a01a757",
+    "/home/lxyue/projects/learned-gate/experiments/sift1m_wide_p0/data/validation.gt": "a5c7b0dbebcd0621219976eddd81ef4860dfa125a16114a40ce9afd7c520adec",
+    "/home/lxyue/projects/learned-gate/experiments/sift1m_wide_p0/data/test.fbin": "2462b7825563680abd67541a0f7a0a634e0bf10154e2d81845010027e3c5059b",
+    "/home/lxyue/projects/learned-gate/experiments/sift1m_wide_p0/data/test.gt": "398def1ce3388d120cb590f2b85d7362e088dcd97cb751318ddcfd941c604481"
+  }
+}

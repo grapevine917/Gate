@@ -1,0 +1,6 @@
+{
+  "platform": "Linux-6.6.87.2-microsoft-standard-WSL2-x86_64-with-glibc2.43",
+  "query_threads": 4,
+  "MKL_threads": 1,
+  "cpu": "Intel(R) Core(TM) i7-14650HX"
+}

@@ -1,0 +1,35 @@
+{
+  "dataset": "SIFT1M",
+  "index": "/home/lxyue/projects/learned-gate/experiments/sift1m/index",
+  "L": 100,
+  "k": 10,
+  "beam": 4,
+  "threads": 4,
+  "cache_nodes": 10000,
+  "cache": "static BFS; identical frozen membership; no dynamic updates",
+  "history_queries": 1000,
+  "test_queries": 1000,
+  "validation_queries": 1000,
+  "seed": 20261018,
+  "target_recall_pct": 99.653,
+  "validation_min_recall_pct": 99.6,
+  "selection": "largest existing candidate threshold satisfying validation Recall>=99.60%; fallback tau0 if infeasible; no test selection",
+  "main_model": "existing 17-128-64-1 state-only MLP; cached nodes retained",
+  "training_label": "legacy conservative retain: skip label iff zero admitted neighbours and not final top10; NOT MS MARCO singleton-removal LR label",
+  "reuse": "disabled in all trace and cost runs",
+  "pairs": "all 1,000,000 directed history->test pairs; pooled L2 distance quantiles; plus per-target nearest-neighbour ranks and per-target quantile bins",
+  "cost_categories": [
+    "distance kernels",
+    "model scoring including standardization",
+    "explicit PQ gather and vector copies",
+    "synchronous reader request/wait",
+    "all remaining search bookkeeping"
+  ],
+  "cost_limit": "exclusive instrumented software regions, not hardware attribution; implicit memory stalls remain within executing region; profile runs separate from timing and trace runs",
+  "extensions": [
+    "LR independent native trajectory",
+    "XGBoost independent native trajectory",
+    "MLP threshold sweep on validation",
+    "test-test pairs, no history construction from test"
+  ]
+}

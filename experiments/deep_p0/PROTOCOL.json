@@ -1,0 +1,55 @@
+{
+  "dataset": "DEEP1M",
+  "base_shape": [
+    1000000,
+    96
+  ],
+  "index": "/home/lxyue/projects/learned-gate/experiments/deep1m/index",
+  "index_R": 64,
+  "index_Lbuild": 100,
+  "PQ_bytes": 34,
+  "K": 10,
+  "beam": 4,
+  "threads": 4,
+  "MKL_threads": 1,
+  "cache_nodes": 10000,
+  "train_queries": 1200,
+  "internal_holdout_queries": 200,
+  "validation_queries": 1000,
+  "test_queries": 1000,
+  "L_grid": [
+    15,
+    20,
+    30,
+    50,
+    75,
+    100,
+    160,
+    300
+  ],
+  "targets": [
+    90,
+    95,
+    98,
+    99,
+    99.5,
+    99.7
+  ],
+  "seed": 20261030,
+  "training": "DEEP-only weights; same1200 training queries for all; matched mixed-L LR/XGB/stateMLP/qvMLP use same cache-miss sample rows and contribution proxy labels. Separate L100 MLP for original P0-A/B, using all L100 cache-miss rows. ET predicts actual prefix GT recall on mixed-L unpruned trajectories.",
+  "neural_training": "160 inner epochs, fixed LR .001 through40/.0003 through80/.0001 through120/.00003 through160; choose best internal query loss then refit all1200. Single fixed seed; same17-128-64-1 hidden architecture; qv input401. CPU denormal flushing enabled for numerical underflow performance.",
+  "P0_A": "L100 beam4; Vanilla, fixed rank>72 and completed>100 heuristic, original L100 MLP, mixed-L LR; each9 repeats; MLP/LR validation retain-FNR1% calibration, not final Recall guarantee.",
+  "P0_B": "Original L100 MLP and mixed-L LR versions; baseline64 L, heuristic64, ET64, each Gate64 and joint64; joint8 predeclared pairs, not full Cartesian. Shared identical controls measured once, same frozen weights per version.",
+  "P0_C": "Baseline + matched mixed-L LR/XGB/17DMLP/401DqvMLP,64 configs each; classification and native score diagnostics on same L100 held-out candidate rows.",
+  "evaluation": "Freeze grid, run full validation; lock per quality/objective before test. Full fixed test grid is descriptive; repeat union of per-objective frontiers, validation-locked choices, exact-common-recall winners and feasible-quality winners to3 until stable. No cost interpolation.",
+  "physical_io": "Native O_DIRECT request count/bytes and /proc/self/io search-window read_bytes measured. WSL2 guest block bytes, not NAND telemetry.",
+  "limits": [
+    "Previously observed DEEP benchmark queries; exploratory",
+    "Finite grid and8 joint pairs; no exhaustive policy-optimality claim",
+    "DEEP neural training schedule extended relative to original SIFT P0; not a pure dataset-only change",
+    "L100 MLP and mixed-L LR differ in training distribution; pure matched ablation is P0-C",
+    "Contribution proxy labels are not counterfactual final-Recall harm labels",
+    "ET uses unpruned trajectories; joint can face trajectory shift",
+    "Single training seed; repeated search timings do not include training variability"
+  ]
+}

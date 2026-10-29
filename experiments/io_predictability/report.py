@@ -1,0 +1,59 @@
+from pathlib import Path
+import json,hashlib,platform
+import sklearn,numpy,scipy
+ROOT=Path(__file__).resolve().parent
+c=json.loads((ROOT/'classification_summary.json').read_text());o=json.loads((ROOT/'online_summary.json').read_text())
+lines=['# 单节点反事实标签可预测性实验','',
+'**结论：SSD 读取前的状态能较好预测单节点“安全且省请求”标签，但尚不能保证联合在线剪枝的质量。** 加入完整查询向量没有稳定改善；简单树的粗粒度叶分数在严格误剪预算下不产生剪枝。','',
+'每个数据集独立使用 1,000 条训练、1,000 条验证和原有 1,000 条测试查询。训练子集从原 8,000 条训练查询随机抽取，训练/验证新增反事实标签，测试复用既有单节点重放。索引和 L=100、k=10、beam=4、BFS cache=10,000 固定，展开不设硬上限。完整定义见 [PROTOCOL.md](PROTOCOL.md)。','',
+'17 维状态仅使用读取前信息：候选 PQ 距离/排名、队列边界、进度、已有最佳 exact 结果、缓存位、相对 PQ 距离等。当前节点 exact 距离、邻接表及度数、fresh/admitted、最终 top-k 标记不进入分类器。第三个模型额外使用已驻内存的完整查询向量。状态获取有 CPU 开销，原生在线搜索包含该开销。','',
+'## 单节点标签可预测性','',
+'正类为单节点跳过后 Recall@10 不下降且 Submitted SSD Read Requests 严格减少。指标按 Cache Miss 查询—节点展开事件计算，不把同一节点跨查询的不同效用混为一个固定节点标签。','',
+'| 数据集 | 模型 | 测试 ROC-AUC | 测试 PR-AUC/AP | 常数分数 AP 基线 |','|---|---|---:|---:|---:|']
+for ds in ['sift','deep']:
+ for name,r in c[ds]['models'].items():
+  m=r['metrics']['test'];lines.append(f"| {ds.upper()}1M | {name} | {m['roc_auc']:.4f} | {m['average_precision']:.4f} | {m['prevalence_baseline_ap']:.4f} |")
+lines+=['','状态逻辑回归的保守阈值（验证集非目标类别 FPR 预算 0.1%，测试不重新选阈值）：','',
+'| 数据集 | 测试精确率 | 安全省请求节点覆盖率 | 测试非目标类别 FPR | 质量关键误剪 / 关键节点数 |','|---|---:|---:|---:|---:|']
+for ds in ['sift','deep']:
+ m=c[ds]['models']['state_lr']['metrics']['test']['unsafe_fpr_0.001'];n=c[ds]['splits']['test']['quality_critical_count']
+ lines.append(f"| {ds.upper()}1M | {m['precision_safe_saving']:.2%} | {m['recall_safe_saving']:.2%} | {m['unsafe_fpr']:.2%} | {m['quality_critical_skips']}/{n} |")
+lines+=['','非目标类别包括质量关键节点和安全但请求不减少的节点。以上错误来自原始路径的单节点分类；它们不等于路径发生变化后的联合质量下降次数。','',
+'## 原生在线策略','',
+'分类器逐候选读取当前路径状态，缓存命中候选始终保留；没有使用测试基线路径预测生成静态掩码。Submitted SSD Read Requests 指 O_DIRECT Reader 提交的读取请求数，**不是 Physical SSD I/O**。净节省来自完整查询请求差值，不能累加单节点收益。','',
+'以下所有阈值都预先在验证集按标签 FPR 确定。完整展示测试诊断，不能从测试中挑选阈值：','',
+'| 数据集 | 状态 LR 验证标签 FPR 预算 | 测试净请求节省 | 测试 Recall@10 | Recall 损失（百分点） | 质量下降查询 | 严格结果一致查询 |',
+'|---|---:|---:|---:|---:|---:|---:|']
+for ds in ['sift','deep']:
+ for key in ['0.001','0.005','0.01']:
+  m=o[ds]['test']['state_lr__unsafe_fpr_'+key]
+  lines.append(f"| {ds.upper()}1M | {float(key):.1%} | {m['net_io_saving_ratio']:.2%} | {m['recall_at_10']:.2%} | {m['recall_loss_pp']:.2f} | {m['quality_degraded_queries']}/1000 | {m['strict_result_preserved_queries']}/1000 |")
+lines+=['','参考原始 Recall@10：SIFT1M 99.67%，DEEP1M 99.47%。GT 采用前十 ID，不扩展距离并列。','',
+'验证集 PR-AUC 选择的主模型在两个数据集均为 state_lr。进一步只依据实际验证搜索，在平均 Recall 损失预算下选择阈值：','',
+'| 数据集 | 验证质量损失预算 | 验证选中标签 FPR 档 | 验证实际损失（百分点） | 测试净请求节省 | 测试实际损失（百分点） | 测试满足预算 |',
+'|---|---:|---|---:|---:|---:|---|']
+for ds in ['sift','deep']:
+ for budget in [0,0.1]:
+  key=f'state_lr__budget_{budget:g}pp';choice=o[ds]['validation_selected_thresholds'][key];test=o[ds]['test'][key]
+  val_loss=0 if choice is None else o[ds]['validation']['state_lr'][choice]['recall_loss_pp']
+  lines.append(f"| {ds.upper()}1M | {budget:g} pp | {choice or 'baseline 回退'} | {val_loss:.2f} | {test['net_io_saving_ratio']:.2%} | {test['recall_loss_pp']:.2f} | {'是' if test['recall_loss_pp']<=budget+1e-9 else '否'} |")
+lines+=['','SIFT 的 0.1 pp 策略在测试上超预算，保留此失败结果，不用测试反馈改阈值。零平均质量损失的验证约束下，已扫描策略没有可获得正收益的可行项，因此回退 baseline；不能把 997/1000 条严格一致宣传为整体 Strict Result-preserving Saving。平均质量预算本身也不等价于逐查询安全约束。','',
+'## 验证与产物','',
+'- 验证训练/验证/测试 query ID 不相交；单节点标签、特征按唯一 (query,node) 对齐，缓存位与标签的 miss 位一致。','- 标准化、分类器仅训练集拟合；标签阈值和实际策略选择仅验证集确定。','- 保存原生模型并验证 Python 模型与导出 float32 分数一致；另用真实原生 audit 验证候选评分，旧 Top3 模型输出保持兼容。','- 测试 baseline 的逐查询读取数与展开数与既有实验一致。','- 在线耗时包含状态计算和评分，但只做单次扫描；本轮不据此宣称稳定的延迟加速。','',
+'文件：[classification_summary.json](classification_summary.json)、[online_summary.json](online_summary.json)、[verification.json](verification.json)。训练与在线脚本为 [train.py](train.py)、[evaluate.py](evaluate.py)，查询划分为 [query_splits.json](query_splits.json)。各模型目录保存 model.bin 和验证阈值，各 split 保存 dataset.npz、特征与标签 CSV。','',
+'本轮未加入历史收益或图结构元数据，也未评估旧 pruning 之上的联合分类器叠加；结论限定于既有索引、缓存、查询划分和当前搜索策略。此前事后 Oracle 的大机会空间与当前可部署分类器的质量约束收益应分别报告。']
+(ROOT/'REPORT.md').write_text('\n'.join(lines)+'\n')
+paths=['prepare.py','train.py','evaluate.py','verify_native.py','report.py','PROTOCOL.md','REPORT.md','query_splits.json','classification_summary.json','online_summary.json']
+lg=ROOT.parent.parent
+for rel in ['DiskANN/apps/collect_io_labels.cpp','DiskANN/include/online_gate.h','DiskANN/apps/search_disk_index.cpp','DiskANN/build/apps/collect_io_labels','DiskANN/build/apps/search_disk_index']:
+ paths.append(str(lg/rel))
+for ds in ['sift','deep']:
+ for split in ['train','validation','test']:
+  paths.extend(f'{ds}/{split}/{n}' for n in ['query.fbin','gt.bin','query_ids.npy','collected_features.csv'])
+ for name in c[ds]['models']:paths.extend(f'{ds}/{name}/{n}' for n in ['model.bin','thresholds.json'])
+sha={}
+for name in paths:
+ path=Path(name) if Path(name).is_absolute() else ROOT/name
+ sha[name]=hashlib.sha256(path.read_bytes()).hexdigest()
+manifest={'python':platform.python_version(),'numpy':numpy.__version__,'scipy':scipy.__version__,'sklearn':sklearn.__version__,'files_sha256':sha,'model_hyperparameters':{'lr':{'C':1,'class_weight':'balanced','max_iter':1000},'tree':{'max_depth':4,'min_samples_leaf':200,'class_weight':'balanced'}},'io_unit':'Submitted SSD Read Requests','train_query_subset_seed':20261014,'samples_per_split':1000,'selection':'validation only','quality_budget_unit':'Recall@10 percentage points','cache_miss_only':True,'feature_availability':'before current candidate SSD submission'}
+(ROOT/'provenance.json').write_text(json.dumps(manifest,indent=2)+'\n')
