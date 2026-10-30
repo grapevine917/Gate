@@ -2,6 +2,11 @@
 
 Updated: 2026-10-29.
 
+2026-10-30 update: fixed repeated prepare falsely rejecting unchanged JSON
+protocols (tuple/list representation). Existing workspaces use
+`experiments/server/repair_prepare.py` after pulling; preserve old protocols and
+binaries. Eleven local safeguard/regression tests pass. See SERVER_RUNBOOK.
+
 ## Current State
 
 - User authorized publishing missing experiment code for manual SSH-server work.

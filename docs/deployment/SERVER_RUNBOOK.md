@@ -108,6 +108,20 @@ create重复执行会拒绝覆盖；中断后的后续阶段可在同一workspac
 
 prepare重新生成阈值、64配置基础网格及本机路径/索引锁；smoke检查关闭Gate/ET与原生一致、ET关闭时联合组与Gate一致、历史原生ID一致。计量保留Reader字节=Linux read_bytes=请求次数×4096及无swap检查。
 
+### 旧版prepare重复执行时报PROTOCOL断言
+
+首版脚本比较Python元组与JSON读回的列表，重复prepare即使参数不变也可能误报。已修复为先统一JSON表示再比较；实际配置或输入/程序哈希变化仍会拒绝，并列出差异，不覆盖旧协议。
+
+对于已创建的旧workspace，先在Gate代码目录更新，再修补该workspace中的prepare副本：
+
+```bash
+git pull --ff-only
+.venv/bin/python experiments/server/repair_prepare.py --workspace ~/gate-runs/server01
+.venv/bin/python experiments/server/benchmark.py prepare --workspace ~/gate-runs/server01
+```
+
+修补器会先核验原workspace，只接受首版prepare或已修复版本，备份prepare及SERVER_CONTEXT后更新该文件的源码哈希。模型、原生程序、PROTOCOL和结果均不删除。无需create新目录、重传数据或重新build。若之后报`Existing protocol differs`，按列出的真实差异排查，不要删掉协议绕过检查。
+
 P0-A是固定L100的5方法×15轮；Recall不一定相同。结果在workspace/experiments/p0_old_models_rerun/，不写回Git代码目录。
 
 ## 7. 扩大P0-B及严格Recall描述性补充
